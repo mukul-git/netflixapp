@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import BackgroundImage from "../assets/home.jpg"
-import logo from "../assets/homeTitle.webp"
+import BackgroundImage from "../assets/home.jpg";
+import logo from "../assets/homeTitle.webp";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getGeneres } from "../store/slice/netflixSlice";
 
 export default function Netflix() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const navigate = useNavigate()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+  const generesData = useSelector((state) => state.netflix.generes);
+  console.log(generesData);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getGeneres());
+  }, [dispatch]);
+
+  // dispatch(getGeneres());
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -19,21 +29,29 @@ export default function Netflix() {
   };
   return (
     <Container>
-      <Navbar isScrolled={isScrolled}/>
+      <Navbar isScrolled={isScrolled} />
       <div className="hero">
-        <img src={BackgroundImage} alt="background" className="background-image"/>
+        <img
+          src={BackgroundImage}
+          alt="background"
+          className="background-image"
+        />
         <div className="container">
           <div className="logo">
             <img src={logo} alt="logo" />
           </div>
           <div className="buttons flex">
-            <button className="flex a-center j-center" onClick={()=> navigate('/player')}>
+            <button
+              className="flex a-center j-center"
+              onClick={() => navigate("/player")}
+            >
               {FaPlay} Play
             </button>
             <button className="flex a-center j-center">
               {AiOutlineInfoCircle} More info
             </button>
           </div>
+          {}
         </div>
       </div>
     </Container>

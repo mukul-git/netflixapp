@@ -1,19 +1,8 @@
-import {createSlice, configureStore, createAsyncThunk} from '@reduxjs/toolkit'
-
-const initialState = {
-    movies: [],
-    genresLoaded: false,
-    genres: []
-}
-
-export const NetflixSlice = createSlice({
-    name: 'netflix',
-    initialState,
-    extraReducers: (builder)=> {}
-})
+import { configureStore } from "@reduxjs/toolkit";
+import netflixReducer from "./slice/netflixSlice";
 
 export const store = configureStore({
-    reducer: {
-        netflix: NetflixSlice.reducer
-    }
-})
+  reducer: {
+    netflix: netflixReducer,
+  },
+});
