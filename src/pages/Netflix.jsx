@@ -1,11 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
+import BackgroundImage from "../assets/home.jpg"
+import logo from "../assets/homeTitle.webp"
+import { FaPlay } from "react-icons/fa";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Netflix() {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const navigate = useNavigate()
+
+
+  window.onscroll = () => {
+    setIsScrolled(window.pageYOffset === 0 ? false : true);
+    return () => (window.onscroll = null);
+  };
   return (
     <Container>
-      <Navbar />
+      <Navbar isScrolled={isScrolled}/>
+      <div className="hero">
+        <img src={BackgroundImage} alt="background" className="background-image"/>
+        <div className="container">
+          <div className="logo">
+            <img src={logo} alt="logo" />
+          </div>
+          <div className="buttons flex">
+            <button className="flex a-center j-center" onClick={()=> navigate('/player')}>
+              {FaPlay} Play
+            </button>
+            <button className="flex a-center j-center">
+              {AiOutlineInfoCircle} More info
+            </button>
+          </div>
+        </div>
+      </div>
     </Container>
   );
 }

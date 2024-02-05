@@ -15,7 +15,7 @@ export default function Login() {
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
       console.log("logged in with email", email);
-      navigate("/netflix");
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
