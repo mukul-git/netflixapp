@@ -2,26 +2,30 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import BackgroundImage from "../assets/home.jpg";
+import Slider from "../components/Slider";
 import logo from "../assets/homeTitle.webp";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getGeneres } from "../store/slice/netflixSlice";
+import { getgenres, fetchMovies } from "../store/slice/netflixSlice";
 
 export default function Netflix() {
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
-  const generesData = useSelector((state) => state.netflix.generes);
-  console.log(generesData);
+  const genresData = useSelector((state) => state.netflix.genres);
+  const movies = useSelector((state) => state.netflix.movies);
+  const genresLoading = useSelector((state) => state.netflix.genresLoading);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getGeneres());
+    dispatch(getgenres());
   }, [dispatch]);
 
-  // dispatch(getGeneres());
+  useEffect(() => {
+    if (genresLoading) dispatch(fetchMovies({ genresData, type: "all" }));
+  }, [dispatch, genresData, genresLoading]);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -51,8 +55,10 @@ export default function Netflix() {
               {AiOutlineInfoCircle} More info
             </button>
           </div>
-          {}
         </div>
+      </div>
+      <div>
+        <Slider movies={movies} />
       </div>
     </Container>
   );
