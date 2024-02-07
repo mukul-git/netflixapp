@@ -5,8 +5,19 @@ import styled from "styled-components";
 export default function CardSlider({ data }) {
   return (
     <Container>
+      <h1>{data.title}</h1>
       {data.map((movies, index) => {
-        return <Card data={movies} key={index} />;
+        return (
+          <Card data={movies} key={index}>
+            <div className="wrapper">
+              <div className="slider">{movies.name}</div>
+              <div className="slider-action"></div>
+              <div className="none"></div>
+              <div className="left"></div>
+              <div className="right"></div>
+            </div>
+          </Card>
+        );
       })}
     </Container>
   );

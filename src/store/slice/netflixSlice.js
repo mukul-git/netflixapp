@@ -38,10 +38,17 @@ const getRawData = async (api, genres, paging = false) => {
   for (let i = 1; moviesArray.length < 60 && i < 10; i++) {
     const {
       data: { results },
-    } = await await axios.get(
-      `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc'${
+    } = await axios.get(
+      `https://api.themoviedb.org/3/trending/movie/day?language=en-US'${
         paging ? `&page=${i}` : ""
-      }`
+      }`,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTVkMDE4ZjkwNTdlMGU4MTkwMjZlNWE5OTRjZmU3YSIsInN1YiI6IjY1YzAwZDIyMTJjNjA0MDE3YzAyZThlZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.hkWgosxH06YCy4JbOYyH0SqyB2Of7pVognF-d7SGNnc",
+        },
+      }
     );
     createArrayFromRawData(results, moviesArray, genres);
   }
