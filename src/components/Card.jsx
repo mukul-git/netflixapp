@@ -6,7 +6,7 @@ export default function Card({ data }) {
     <Container>
       <img src={data.image} alt={data.title} />
       <div className="hover">
-        <div className="image-video-container">vdo</div>
+        <div className="image-video-container">{data.name}</div>
         <div className="info-container"></div>
         <div className="icons"></div>
         <div className="genres"></div>

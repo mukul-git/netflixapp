@@ -9,13 +9,13 @@ import { firebaseAuth } from "../utils/firebase-config";
 // library.add(faCoffee, faPlus);
 
 export default function Navbar() {
-  const [showSearch, setShowSearch] = useState(false)
-  const [ inputHover, setInputHover] = useState(false)
-  const navigate = useNavigate()
+  const [showSearch, setShowSearch] = useState(false);
+  const [inputHover, setInputHover] = useState(false);
+  const navigate = useNavigate();
 
-  onAuthStateChanged(firebaseAuth, (currUser)=>{
-    if (!currUser) navigate('/login')
-  })
+  onAuthStateChanged(firebaseAuth, (currUser) => {
+    if (!currUser) navigate("/login");
+  });
 
   const links = [
     { name: "Home", link: "/home" },
@@ -25,38 +25,41 @@ export default function Navbar() {
   ];
   return (
     <Container>
-    <nav className="flex">
-      <div className="left flex a-center">
-        <div className="brand flex a-center j-center">
-          <img src={logo} alt="Logo" />
+      <nav className="flex">
+        <div className="left flex a-center">
+          <div className="brand flex a-center j-center">
+            <img src={logo} alt="Logo" />
+          </div>
+          <ul className="links flex">
+            {links.map(({ name, link }) => {
+              return (
+                <li key={name}>
+                  <Link to={link}>{name}</Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-        <ul className="links flex">
-          {links.map(({ name, link }) => {
-            return (
-              <li key={name}>
-                <Link to={link}>{name}</Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-     
-      <div className="right flex a-center">
-        <div  >
+
+        <div className="right flex a-center">
+          <div>
+            <button>
+              <FaSearch
+                onFocus={() => setShowSearch(true)}
+                onBlur={() => {
+                  if (!inputHover) setShowSearch(false);
+                }}
+              />
+            </button>
+            <input type="text" placeholder="Search" />
+          </div>
           <button>
-           <FaSearch onFocus={()=> setShowSearch(true)} onBlur={()=> {
-            if (!inputHover) setShowSearch(false)
-           }}  />
+            <FaPowerOff onClick={() => signOut(firebaseAuth)} />
           </button>
-          <input type="text" placeholder="Search" />
         </div>
-        <button>
-        <FaPowerOff onClick={()=>signOut(firebaseAuth)}/>
-        </button>
-      </div>
-    </nav>
-  </Container>
-);
+      </nav>
+    </Container>
+  );
 }
 
 const Container = styled.div`
@@ -64,7 +67,6 @@ const Container = styled.div`
     background-color: black;
   }
   nav {
-    position: sticky;
     top: 0;
     height: 6.5rem;
     width: 100%;

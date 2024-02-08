@@ -2,7 +2,7 @@ import React from "react";
 import Card from "./Card";
 import styled from "styled-components";
 
-export default function CardSlider({ data }) {
+export default function CardSlider({ data, title }) {
   return (
     <Container>
       <h1>{data.title}</h1>
