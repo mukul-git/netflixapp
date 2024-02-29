@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import BackgroundImage from "../assets/home.jpg";
-import Slider from "../components/Slider";
+// import Slider from "../components/Slider";
 import logo from "../assets/homeTitle.webp";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getgenres, fetchMovies } from "../store/slice/netflixSlice";
+import { getgenres, fetchMovies } from "../store/slice/moviesSlice";
+import { fetchAllTrending } from "../store/slice/allTypeSlice";
+
+import CardSlider from "../components/slider/CardSlider";
 
 export default function Netflix() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,6 +19,7 @@ export default function Netflix() {
   const genresData = useSelector((state) => state.netflix.genres);
   const movies = useSelector((state) => state.netflix.movies);
   const genresLoading = useSelector((state) => state.netflix.genresLoading);
+  const allTtype = useSelector((state) => state.allType.allTrending);
 
   const dispatch = useDispatch();
 
@@ -57,9 +61,8 @@ export default function Netflix() {
           </div>
         </div>
       </div>
-      <div>
-        <Slider movies={movies} />
-      </div>
+      <CardSlider movies={movies} />
+      <div style={{ height: "400px" }}></div>
     </Container>
   );
 }

@@ -12,6 +12,7 @@ const initialState = {
 export const getgenres = createAsyncThunk("getgenres", async () => {
   const { data: genres } = await axios.get(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=515d018f9057e0e819026e5a994cfe7a"
+    // `${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}`
   );
   return genres;
 });
@@ -39,7 +40,7 @@ const getRawData = async (api, genres, paging = false) => {
     const {
       data: { results },
     } = await axios.get(
-      `https://api.themoviedb.org/3/trending/movie/day?language=en-US'${
+      `https://api.themoviedb.org/3/trending/all/day?language=en-US'${
         paging ? `&page=${i}` : ""
       }`,
       {
@@ -69,7 +70,7 @@ export const fetchMovies = createAsyncThunk(
   }
 );
 
-export const netflixSlice = createSlice({
+export const moviesSlice = createSlice({
   name: "netflix",
   initialState,
   extraReducers: (builder) => {
@@ -89,5 +90,5 @@ export const netflixSlice = createSlice({
   },
 });
 
-export default netflixSlice.reducer;
-export const { setgenres, setMovies } = netflixSlice.actions;
+export default moviesSlice.reducer;
+export const { setgenres, setMovies } = moviesSlice.actions;

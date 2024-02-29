@@ -18,7 +18,7 @@ export default function Navbar() {
   });
 
   const links = [
-    { name: "Home", link: "/home" },
+    { name: "Home", link: "/" },
     { name: "TV Shows", link: "/tv" },
     { name: "Movies", link: "/movies" },
     { name: "My list", link: "/mylist" },
